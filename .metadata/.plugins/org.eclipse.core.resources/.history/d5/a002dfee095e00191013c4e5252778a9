@@ -1,0 +1,5 @@
+package MAE1Project;
+
+public interface IndividualCatalogue {
+	public Individual instantiateIndividual(String name);
+}

@@ -6,6 +6,12 @@ package MAE1Project;
 
 /************************************************************/
 /**
+ * @author Felix Zapata
+ * Date: 3/04/2019
+ * 
+ * Action class is an abstract class and defines the basic blueprint
+ * of any characteristic action to be performed by the characters present
+ * in the game.
  * 
  */
 public abstract class Action {
@@ -44,7 +50,7 @@ public abstract class Action {
 	 * @param victim: Individual instance over which the action is to be executed
 	 */
 	public abstract void execute(Individual victim);
-	
+		
 	/***************** GETTERS AND SETTERS ******************/
 
 	public String getName() {

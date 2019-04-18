@@ -1,0 +1,141 @@
+package MAE1Project;
+
+//------------------ IMPORT MODULES ---------------------------//
+
+// No modules to import
+
+/************************************************************/
+/**
+* @author Felix Zapata
+* Date: 3/04/2019
+* 
+* PlayerCatalogue is an enum class which serves as a Catalogue
+* to define the player mode.
+*/
+public enum PlayerCatalogue {
+	
+	// Define the elements in the Enum
+	SINGLEPLAYER(1, 5),
+	MULTIPLAYER(2, 1);
+	
+	/**
+	 * numberOfPlayers indicates the amount of players allowed
+	 * in each mode
+	 */
+	private final int numberOfPlayers;
+	
+	/**
+	 * maxEncounters define the maximum number of encounters allowed
+	 * to happen in each mode.
+	 */
+	private final int maxEncounters;
+	
+	/**
+	 * PlayerCatalogue constructor
+	 * @param number: integer indicating the number of players allowed in each mode
+	 */
+	private PlayerCatalogue(final int number, final int encounters) {
+		numberOfPlayers = number;
+		maxEncounters = encounters;
+		}
+
+	/**
+	 * returnMode identifies the mode based on its numbering order.
+	 * @param order: integer indicating the order of the PlayerMode.
+	 * @return desired PlayerCatalogue object.
+	 */
+	public static PlayerCatalogue returnMode(int order) throws IndexOutOfBoundsException {
+		// Convert to array
+		PlayerCatalogue[] values = PlayerCatalogue.values();
+		
+		// Throw exception in case the index is out of bounds
+		if (values.length - 1 < order) {
+			throw new IndexOutOfBoundsException("Incorrect value for Player Selection");
+		}
+		
+		// If no exception is thrown return the expected mode
+		return values[order];
+	}
+	
+	/**
+	 * toString returns a String representation of the object
+	 */
+	public static String tostring(){
+		// Assemble the string
+		PlayerCatalogue[] values = PlayerCatalogue.values();
+		String out = "";
+		for (int i = 0; i < values.length; i++) {
+			out += String.format("%s: %d", values[i].toString(), i);
+		}
+		// Return the output
+		return out;
+	}
+	
+	public Encounter generateNewEncounter(Settings settings) {
+		// Call out the teams
+		// TODO: implement Encounter to be able to account with MultiplayerMode and also
+		// have the flexibility to choose different teams...
+		User<Hero> userHero = settings.getUserHero();
+		User<Monster> userMonster = settings.getUserMonster();
+		
+		// Perform decision
+		switch (this) {
+		// TODO: implement the different cases
+		default:
+		{
+			return new Encounter(userHero, userMonster);
+		}
+		}
+	}
+	
+	/**
+	 * reconditionAfterEncounter reconditions the game after an encounter has taken place, as expected
+	 * it will depend on the nature of the player mode.
+	 * @param settings: Settings instance which we want to recondition
+	 * @param oldEncounter: previous encounter from which we want to know if it was won or not
+	 */
+	public void reconditionAfterEncounter(Settings settings, Encounter oldEncounter) {
+		// Perform decision based on the type of player catalog
+		
+		switch (this) {
+		// Case we are playing in SinglePlayer
+		case SINGLEPLAYER:
+		{
+			// Re-populate the corresponding team that is virtual
+			User<Monster> userMonster = settings.getUserMonster();
+			User<Hero> userHero = settings.getUserHero();
+			if (userMonster.isVirtual()) {
+				// Replace the old user with new characters. Update the opposing team
+				userMonster.getCharacter().generateVirtualUser(settings, userMonster.getName());
+				userHero.getTeam().resetTeam();
+			}
+			if (userHero.isVirtual()) {
+				// Replace the old user in the settings character. Update the opposing team
+				userHero.getCharacter().generateVirtualUser(settings, userHero.getName());
+				userMonster.getTeam().resetTeam();
+			}
+		}
+			
+		case MULTIPLAYER:
+		{
+			// Do no reconditioning for the multiplayer
+		}
+		default:
+			break;
+
+		}
+		
+		
+	}
+
+	// -------------------- GETTERS AND SETTERS ---------------------
+	
+	public int getNumberOfPlayers() {
+		return numberOfPlayers;
+	}
+	
+	public int getMaxEncounters() {
+		return maxEncounters;
+	}
+	
+}

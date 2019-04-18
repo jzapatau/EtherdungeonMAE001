@@ -9,22 +9,35 @@ package MAE1Project;
 //No modules to import
 
 /************************************************************/
+/**
+ * @author Felix Zapata
+ * Date: 3/04/2019
+ * 
+ * Class Turn is in charge of commanding the dynamics of
+ * a Turn assigned to any of the two teams. It is a Java Generics
+ * class which has as type variable any descendant of Individual
+ */
 public class Turn<T extends Individual, Q extends Individual> {
 	
 	// ------------------ PROPERTIES ------------------------ //
 	
 	/**
-	 * teamA property stores the team from which the owner shall be picked
+	 * int turnID gives the identifier to the Turn in order to know its
+	 * time coordinate within the Encounter.
 	 */
-	private Team<T> teamA;
+	private int turnID;
+	/**
+	 * UserA property stores the User from which the owner shall be picked
+	 */
+	private User<T> UserA;
 	
 	/**
-	 * teamB property stores the opposing team
+	 * UserB property stores the opposing team
 	 */
-	private Team<Q> teamB;
+	private User<Q> UserB;
 	
 	/**
-	 * owner is the member of teamA who owns the encounter
+	 * owner is the member of UserA team who owns the encounter
 	 */
 	private T owner;
 	
@@ -37,36 +50,41 @@ public class Turn<T extends Individual, Q extends Individual> {
 	
 	/**
 	 * Class constructor
-	 * @param teamA: Team of type T which extends individual
-	 * @param teamB: Team of type Q which extends individual
-	 * @param userInput: boolean which defines if required user input or automatic draft
+	 * @param ID: Integer that identifies the Turn
+	 * @param UserA: User of type T which extends individual
+	 * @param UserB: User of type Q which extends individual
 	 */
-	public Turn(Team<T> teamA, Team<Q> teamB, boolean userInput){
+	public Turn(int ID, User<T> UserA, User<Q> UserB){
 		// Set properties
-		this.setTeamA(teamA);
-		this.setTeamB(teamB);
+		this.setTurnID(ID);
+		this.setUserA(UserA);
+		this.setUserB(UserB);
 		this.setUi(UI.INSTANCE);
-		if (userInput) {
-			this.setOwner(this.draftByInput());		// Draft by input
-		}
-		else{
-			this.setOwner(this.draftRandomly());	// Draft randomly
-		}
+		
+		// Present the turn before doing the draft
+		presentTurn();
+		
+		// Perform the owner draft
+		T myDraft = UserA.draftTeamMember();
+		
+		// Set the owner of the Turn
+		this.setOwner(myDraft);
+		
 	}
 	
 	/**
-	 * runTurn method executes the specified turn over the owner
+	 * Class constructor 2
 	 * @param owner: represents the entity (Individual) who owns the turn and who is
 	 * going to perform its action over a team-mate or an opponent
-	 * @param temaA : Team instance associated to the owner. Has to be of same type
+	 * @param UserA : User instance associated to the owner. Has to be of same type
 	 * of the owner
-	 * @param teamB: Team instance associated to the opponents. 
+	 * @param UserB: User instance associated to the opponents. 
 	 */
-	public Turn(T owner, Team<T> teamA, Team<Q> teamB) {
+	public Turn(T owner, User<T> UserA, User<Q> UserB) {
 		// Set properties
 		this.setOwner(owner);
-		this.setTeamA(teamA);
-		this.setTeamB(teamB);
+		this.setUserA(UserA);
+		this.setUserB(UserB);
 		this.setUi(UI.INSTANCE);
 	}
 	
@@ -74,74 +92,39 @@ public class Turn<T extends Individual, Q extends Individual> {
 	 * runTurn method executes the specified turn over the owner
 	 */
 	public void runTurn() {
-		// Call on performAction of owner
-		owner.performAction(teamA, teamB);
+		// Perform check on owner, if different run performAction 
+		if (owner != null) {
+			owner.performAction(UserA, UserB);
+		}
 	}
 	
 	/**
-	 * draftByInput drafts the owner of the Turn by means of user input
-	 * @return owner of T type
+	 * presentTurn presents the new turn to the user to know it's location
+	 * within the game
 	 */
-	private T draftByInput() {
-		// Generate draft string
-		String out = String.format("\n Pick a character: \n %s \n Choose a character 1 - %d \n", 
-				teamA.toString(), teamA.getMembers().size());
-		
-		// Print to screen
+	private void presentTurn() {
+		// Generate the string to present
+		String out = "\n------------------------ STARTING TURN: %8d, Owner: %10s ------------------------------------\n";
+		out = String.format(out, this.getTurnID(), UserA.getName());
 		ui.printToScreen(out);
-		
-		// Get integer from screen
-		// TODO: perform exception checking here
-		int input = Integer.getInteger(ui.inputScreen());
-		
-		// Set the owner
-		// TODO: implement IndexOutOfBoundsExceptcion
-		T newOwner = teamA.getMembers().get(input-1);
-		
-		// Print the selection
-		String out1 = String.format("\n Selected %s \n", newOwner.toString());
-		ui.printToScreen(out1);
-		
-		// Return the owner
-		return newOwner;
-	}
-	
-	/**
-	 * draftRandom drafts the owner of the Turn by means of a random int generator
-	 * @return owner of T type
-	 */
-	private T draftRandomly() {
-		// Generate a random number from 0 to len(teamA) to obtain an owner
-		int randInt = (int) (teamA.getMembers().size() * Math.random());
-		
-		// Set the owner
-		// TODO: implement IndexOutOFBounds Exception
-		T newOwner = teamA.getMembers().get(randInt);
-		
-		// Print the selection
-		String out = String.format("\n Selected %s \n", newOwner.toString());
-		ui.printToScreen(out);
-		
-		// Return the owner
-		return newOwner;
 	}
 	
 	/***************** GETTERS AND SETTERS ******************/
 	
-	public Team<T> getTeamA() {
-		return teamA;
+	public User<T> getUserA() {
+		return UserA;
 	}
 
-	public void setTeamA(Team<T> teamA) {
-		this.teamA = teamA;
+	public void setUserA(User<T> UserA) {
+		this.UserA = UserA;
 	}
 
-	public Team<Q> getTeamB() {
-		return teamB;
+	public User<Q> getUserB() {
+		return UserB;
 	}
 
-	public void setTeamB(Team<Q> teamB) {
-		this.teamB = teamB;
+	public void setUserB(User<Q> UserB) {
+		this.UserB = UserB;
 	}
 
 	public T getOwner() {
@@ -158,6 +141,14 @@ public class Turn<T extends Individual, Q extends Individual> {
 
 	public void setUi(UI ui) {
 		this.ui = ui;
+	}
+
+	public int getTurnID() {
+		return turnID;
+	}
+
+	public void setTurnID(int turnID) {
+		this.turnID = turnID;
 	}
 	
 };

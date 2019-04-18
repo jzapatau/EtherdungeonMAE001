@@ -1,0 +1,14 @@
+package MAE1Project;
+
+/************************************************************/
+/**
+ * @author Felix Zapata
+ * Date: 3/04/2019
+ * 
+ * Class clock is the parent class of all the characters present in the
+ * game. It is an abstract class and describes the basic behavior of all those
+ * who derive from it.
+ */
+public class Clock {
+
+}

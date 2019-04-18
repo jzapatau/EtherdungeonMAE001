@@ -10,6 +10,9 @@ import java.util.Scanner;
 
 /************************************************************/
 /**
+ * @author Felix Zapata
+ * Date: 3/04/2019
+ * 
  * UI class is implemented as an enum with the purpose of
  * defining a Singleton class. Using enums to define singletons
  * is described as the best way in Java for implementing this
@@ -22,7 +25,21 @@ import java.util.Scanner;
 public enum UI {
 	INSTANCE;
 	
+	/*
+	 * Set the properties of the instance
+	 */
+	private Scanner myScanner = null;
+	
 	//----------------------- METHODS ---------------------------//
+	
+	/**
+	 * Enum constructor
+	 */
+	private UI() {
+		// Set my Scanner
+		Scanner newScanner = new Scanner(System.in);
+		this.setMyScanner(newScanner);
+	}
 	
 	/**
 	 * outputString method proceeds to print the provided String
@@ -35,18 +52,94 @@ public enum UI {
 	}
 
 	/**
-	 * inputScreen method returns the String inputted from the screen
+	 * inputScreen method returns the String input from the screen
 	 * by the user
-	 * @return String inputted by the user
+	 * @param userIndication: String indicating the pattern that has to be passed.
+	 * @return String input by the user
 	 */
-	public String inputScreen() {
+	public String inputScreen(String userIndication) {
 		
-		// TODO implement error handling in the present section of
-		// the input modules.
-		Scanner keyboard = new Scanner(System.in);			// Read from the screen
-		String output = keyboard.next();					// Extract the string	
-		keyboard.close(); 									// Close the keyboard
-		return output;
+		printToScreen("\n Please input in fashion: " + userIndication + "\n");	// Print the userIndication to screen
+		String output = this.getMyScanner().next();								// Extract the string	
+		return output;															// Return the output
 
+	}
+	
+	/**
+	 * inputLineScreen method returns the String input from the screen
+	 * by the user when he is supposed to enter a line
+	 * @param userIndication: String indicating the pattern that has to be passed.
+	 * @return String line input by the user
+	 */
+	private String inputScreenLine(String userIndication) {
+
+		printToScreen("\n Please input in fashion: " + userIndication + "\n");		// Print the userIndication to screen
+		String output = this.getMyScanner().nextLine();								// Extract the string	
+		return output;																// Return the output
+	}
+	
+	/**
+	 * inputScreenPattern methods returns the String input from the screen by the user
+	 * following a given pre-stablished pattern;
+	 * @param pattern: Regular expression pattern to be matched
+	 * @param userIndication: String indicating to the user the pattern to input
+	 * @return String inputted by the user that succesfully matches the pattern
+	 */
+	public String inputScreenPattern(String pattern, String userIndication) throws IllegalArgumentException {
+		// Determine if there is a match
+		
+		int counter = 0;		// Define a counter
+		int maxCount = 10;		// Define the max count
+		String myString = "";	// Initialize myString
+		
+		// Execute while loop to run 10 times the counter
+		while (counter < maxCount) {
+			
+			// Collect the data from screen
+			myString = inputScreenLine(userIndication);
+			
+			// Perform check on the pattern
+			if (!myString.matches(pattern)) {
+				
+				counter += 1;								// Increment the counter accordingly
+				printToScreen(String.format("\t------ IMPROPER USER INPUT: N attempts remaining: %2d ------\t\n", 
+						maxCount - counter));				// Print the warning to screen
+				
+			}
+			else {
+				break;
+			}	
+		}
+		// Throw Exception when this occurs
+		if (counter == maxCount) {
+			throw new IllegalArgumentException(String.format("Improper user input, attempted %2d unsuccesfully.", maxCount));
+		}
+		
+		
+		return myString;
+	}
+	
+	
+	/**
+	 * patternMatching static method determines if a given String input matches a pattern
+	 * defined as a regular expression.
+	 * @param pattern: String that constitutes the regular expression pattern.
+	 * @param myString: String to be contrasted with the pattern
+	 * @return boolean indicating if there is match (true) or not (false).
+	 */
+	public static boolean patternMatching(String pattern, String myString) {
+		// patternMatching 
+		boolean match = myString.matches(pattern);
+		return match;
+	}
+	
+	// --------------------------- GETTERS AND SETTERS ------------------------//
+	
+	public Scanner getMyScanner() {
+		return myScanner;
+	}
+
+	public void setMyScanner(Scanner myScanner) {
+		this.myScanner = myScanner;
 	}
 };

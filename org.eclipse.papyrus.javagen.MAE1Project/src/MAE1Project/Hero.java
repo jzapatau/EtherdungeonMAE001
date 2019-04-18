@@ -6,6 +6,9 @@ package MAE1Project;
 
 /************************************************************/
 /**
+ * @author Felix Zapata
+ * Date: 3/04/2019
+ * 
  * Hero abstract class inherits from the Individual abstract
  * class. 
  */
@@ -19,11 +22,41 @@ public abstract class Hero extends Individual {
 	 * @param name: String defining the name of the Hero
 	 * @param action: Action instance related to the Hero
 	 * @param performance: float indicating the relative performance of the Hero
+	 * @param healthPoints: maximum health points allowed to the class to have
 	 */
-	public Hero(String type, String name, Action action, float performance){
-		super(type, name, action, performance);   	// Call superclass constructor
+	public Hero(String type, String name, Action action, float performance, float healthPoints){
+		super(type, name, action, performance, healthPoints);   	// Call superclass constructor
+		
+//		public Individual(String type, String name, Action action,float performance, float healthPoints) 
 	}
 	
+	/**
+	 * Class constructor 2
+	 * @param type: String defining the type of Hero
+	 * @param name: String defining the name of the Hero
+	 * @param performance: float indicating the relative performance of the Hero
+	 * @param healthPoints: maximum health points allowed to the class to have
+	 */
+	public Hero(String type, String name, float performance, float healthPoints) {
+		super(type, name, performance, healthPoints);				// Call superclass constructor
+		
+//		public Individual(String type, String name, float performance, float healthPoints)
+	}
+	
+	/**
+	 * Class constructor 3
+	 * @param type: String defining the type of Hero
+	 * @param name: String defining the name of the Hero
+	 * @param performance: float indicating the relative performance of the Hero
+	 * @param healthPoints: maximum health points allowed to the class to have
+	 * @param attractiveness: float indicating how attractive is the Hero
+	 */
+	public Hero(String type, String name, float performance, float healthPoints, float attractiveness) {
+		super(type, name, performance, healthPoints, attractiveness);	// Call superclass constructor
+		
+//		public Individual(String type, String name, float performance, float healthPoints, float attractiveness)
+	}
+
 	/**
 	 * returnClassTeam is an inherited method that returns a String
 	 * which defines the Team to which the Individual belongs to.

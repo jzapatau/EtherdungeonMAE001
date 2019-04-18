@@ -10,42 +10,59 @@ package MAE1Project;
 
 /************************************************************/
 /**
+ * @author Felix Zapata
+ * Date: 3/04/2019
+ * 
  * Class Encounter is in charge of commanding the dynamics of
  * any confrontation between two teams.
+ * 
+ * TODO: Templatize Encounter to be able to account with Users that are different from
+ * Hero or Monster
  */
 public class Encounter {
 	
 	// ------------------ PROPERTIES ------------------------ //
+	
 
 	/**
-	 * teamHero is a Team instance for the
+	 * User is a User instance for the
 	 * Heroes in the confrontation.
 	 */
-	private Team<Hero> teamHero;
+	private User<Hero> userHero;
 	
 	/**
-	 * teamMonster is a Team instance for the
+	 * UserMonster is a USer instance for the
 	 * Monster in the confrontation.
 	 */
-	private Team<Monster> teamMonster;
+	private User<Monster> userMonster;
 
 	/*
 	 * ui is the UI instance required to perform the command.
 	 */
-	public UI ui;
+	private UI ui;
+	
+	/**
+	 * Clock clock instance helps to keep track of the different 
+	 * turns that occur in the encounter
+	 */
+	private Clock clock;
 	
 	//----------------------- METHODS ---------------------------//
 
 	/**
 	 * Class constructor
-	 * @param teamHero: Team of heroes
-	 * @param teamMonster: Team of monsters
+	 * @param userHero: User of heroes
+	 * @param userMonster: User of monsters
 	 */
-	public Encounter(Team<Hero> teamHero, Team<Monster> teamMonster) {
+	public Encounter(User<Hero> userHero, User<Monster> userMonster) {
 		// Set the properties of the object
-		this.setTeamHero(teamHero);
-		this.setTeamMonster(teamMonster);
+		this.setUserHero(userHero);
+		this.setUserMonster(userMonster);
 		this.setUi(UI.INSTANCE);
+		
+		// Instantiate a new clock object and set it as the one of the users
+		Clock myClock = new Clock();
+		this.setClock(myClock);
 	}
 	
 	/**
@@ -56,37 +73,37 @@ public class Encounter {
 		// First Print to Screen the Encounter
 		this.presentEncounter();
 		
-		// Initialize a counter to keep track of the encounter
-		int counter = 0;
-		
+		// Set the clock counter to 0 as corresponds at the beginning of the
+		// encounter
+		this.resetClockOfEncounter();
+			
 		// Run the encounter
 		while (!this.isFinished()) 
 		{
 			// If even run Turn for the Hero team
-			if (counter % 2 == 0){
+			if (clock.getTurnNum() % 2 == 0){
 				// Create newTurn and run it
-				Turn<Hero, Monster> newTurn = new Turn<Hero, Monster>(teamHero, teamMonster, true);
+				Turn<Hero, Monster> newTurn = new Turn<Hero, Monster>(clock.getTurnNum(), userHero, userMonster);
 				newTurn.runTurn();
 			}
 			else {
 				// draft monster following participation Queue
 				// TODO: implement TypeException Exception handling
-				Monster monster = teamMonster.draftMember();
 				// Create newTurn and run it
-				Turn<Monster, Hero> newTurn = new Turn<Monster, Hero>(monster, teamMonster, teamHero);
+				Turn<Monster, Hero> newTurn = new Turn<Monster, Hero>(clock.getTurnNum(), userMonster, userHero);
 				newTurn.runTurn();
 			}
 			
-			// Update both teams
-			teamHero.update();
-			teamMonster.update();
+			// Update the clock to move on to next turn
+			updateClock();
 			
-			// Update the counter
-			counter++;
+			// Once the clock has been updated update the teams
+			updateTeams();
+			
 		}
 		
-		// TODO: closeEncounter method for printScreen
-		
+		// Close encounter on screen to move on
+		closeEncounter();
 	}
 	
 	/**
@@ -96,45 +113,94 @@ public class Encounter {
 	private void presentEncounter() {
 		// Collect both teams strings and merge them accordingly
 		String out = "";
-		out += "\n------------------- NEW FIGHT!!!!! GET READY!!!!!! ----------------------\n";
+		out += "\n------------------------------- NEW FIGHT!!!!! GET READY!!!!!! --------------------------------------\n";
 		out += "Featuring: \n";
-		out += this.getTeamHero().toString();
+		out += userHero.getTeam().toString();
 		out += "\n\n VERSUS \n\n";
-		out += this.getTeamMonster().toString();
-		out += "\n------------------- LET THE FIGHT TO DEATH BEGIN!!!! ---------------------\n";
-		
+		out += userMonster.getTeam().toString();
+		out += "\n--------------------------------- LET THE FIGHT TO DEATH BEGIN!!!! -----------------------------------\n";
+
 		// Print the object to the screen
 		this.getUi().printToScreen(out);
 	}
 	
 	/**
-	 * runNewTurnHero implements the Turn for the Hero
+	 * closeEncounter() is a private method which handles the presentation of the encounter
+	 * of the objects at the ending of it. It presents the winner team.
 	 */
+	private void closeEncounter() {
+		// Prepare the String
+		String out = "";
+		out += "\n --------------------------------------- FIGHT FINISHED!!!!! ---------------------------------------- \n";
+		out += "Team winner: \n";
+		
+		// Check if encounter isWon
+		if (!userHero.hasLost() & userMonster.hasLost()) {
+			out += userHero.getTeam().toString();
+		}
+		if (!userMonster.hasLost() & userHero.hasLost()) {
+			out += userMonster.getTeam().toString();
+		}
+		else {
+			out += "We have a draw!";
+		}
+		// Print the string to the screen
+		ui.printToScreen(out);
+	}
 	
+	/**
+	 * resetClock is a private method that sets the value of the clock that belongs to the encounter to
+	 * 0. To be used only when the encounter starts.
+	 */
+	private void resetClockOfEncounter() {
+		this.getClock().setTurnNum(0);
+	}
+	
+	/**
+	 * updateClock updates the clock by one turn at the end of the turn
+	 */
+	private void updateClock() {
+		clock.update();
+	}
+	
+	/**
+	 * updateTeams updates the Teams involved at the end of the Encounter
+	 */
+	private void updateTeams() {
+		// Update the teams of userHero and userMonster
+		userHero.getTeam().update();
+		userMonster.getTeam().update();
+	}
+
 	/***************** GETTERS AND SETTERS ******************/
 
+	/**
+	 * isWon helps determine if the encounter was won
+	 * @return boolean indicating if the encounter was won.
+	 */
 	public boolean isWon() {
-		return !(teamHero.getMembers().isEmpty());
+		// Construct the boolean to determine if an encounter was won
+		return userHero.remainsPlayer() || userMonster.remainsPlayer();
 	}
-
+	
 	public boolean isFinished() {
-		return (teamHero.getMembers().isEmpty() || teamMonster.getMembers().isEmpty());
+		return (userHero.hasLost() || userMonster.hasLost());
 	}
 
-	public Team<Hero> getTeamHero() {
-		return teamHero;
+	public User<Hero> getUserHero() {
+		return userHero;
 	}
 
-	public void setTeamHero(Team<Hero> teamHero) {
-		this.teamHero = teamHero;
+	public void setUserHero(User<Hero> userHero) {
+		this.userHero = userHero;
 	}
 
-	public Team<Monster> getTeamMonster() {
-		return teamMonster;
+	public User<Monster> getUserMonster() {
+		return userMonster;
 	}
 
-	public void setTeamMonster(Team<Monster> teamMonster) {
-		this.teamMonster = teamMonster;
+	public void setUserMonster(User<Monster> userMonster) {
+		this.userMonster = userMonster;
 	}
 
 	public UI getUi() {
@@ -143,6 +209,20 @@ public class Encounter {
 
 	public void setUi(UI ui) {
 		this.ui = ui;
+	}
+
+	public Clock getClock() {
+		return clock;
+	}
+
+	public void setClock(Clock clock) {
+		
+		// Set the clock on both teams that will be part of the encounter
+		userHero.getTeam().setClockOnTeamMembers(clock);
+		userMonster.getTeam().setClockOnTeamMembers(clock);
+		
+		// Set the clock on the encounter
+		this.clock = clock;
 	}
 	
 	

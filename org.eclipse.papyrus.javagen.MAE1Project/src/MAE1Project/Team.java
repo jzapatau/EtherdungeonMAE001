@@ -17,6 +17,9 @@ import java.util.ArrayList;			// Import Java ArrayList
 
 /************************************************************/
 /**
+ * @author Felix Zapata
+ * Date: 3/04/2019
+ * 
  * Team is a Java Generics class which can only accept as type
  * variable any child from Individual. Thus, it constitutes a 
  * Java Generics with bounded type variable. The idea behind this
@@ -34,6 +37,12 @@ public class Team<T extends Individual> {
 	private ArrayList<T> members;
 	
 	/**
+	 * activeMembers property defined the members that belong to the team
+	 * that are actually active. That means that have not fainted.
+	 */
+	private ArrayList<T> activeMembers;
+	
+	/**
 	 * participationQueue property defines a queue of the participation
 	 * of each member in an encounter to assign priority to participation.
 	 */
@@ -48,6 +57,7 @@ public class Team<T extends Individual> {
 	public Team() {
 		// Instantiate the LinkedList
 		this.members = new ArrayList<T>();
+		this.activeMembers = new ArrayList<T>();
 		this.participationQueue = new ArrayList<Boolean>();
 	}
 	/**
@@ -82,20 +92,23 @@ public class Team<T extends Individual> {
 
 	/**
 	 * update() method removes those members of the team
-	 * who are dead.
+	 * who are fainted/dead.
 	 */
 	public void update() {
 		// Loop through the LinkedList and remove those members
-		// who are dead
+		// who are fainted/dead
 		for (T elem : this.members) 
 		{
-			// Ask if the element is dead
-			if (elem.isDead()) 
+			// Call the update method of the element
+			elem.update();
+			
+			// Ask if the element is fainted/dead
+			if (elem.isFainted()) 
 			{	
-				// Remove first from participationQueue, then from members
-				this.participationQueue.remove(this.members.indexOf(elem));
+				// Remove the member from the activeMembers ArrayList;
 				this.remove_member(elem);
 			}
+			
 		}
 		
 		// Update the participation Queue
@@ -113,6 +126,24 @@ public class Team<T extends Individual> {
 	}
 	
 	/**
+	 * resetTeam updates the Team after an Encounter
+	 */
+	public void resetTeam() {
+		// Reset active members and participationQueue
+		activeMembers = new ArrayList<T>();
+		participationQueue = new ArrayList<Boolean>();
+		
+		for (T elem : this.members) {
+			// reset the element
+			elem.reset();
+			
+			// Add the element to the activeMembers list and participation Queue
+			activeMembers.add(elem);
+			participationQueue.add(false);
+		}
+	}
+	
+	/**
 	 * add_member adds a new member to the Team
 	 * @param newMember: instance of type T to be added to the Team
 	 */
@@ -121,27 +152,28 @@ public class Team<T extends Individual> {
 		// Check the member is not in the LinkedList
 		if (!this.members.contains(newMember)) 
 		{
-			// Add the newMember to the list
+			// Add the newMember to the members list and active members list
 			this.members.add(newMember);
-			// Add a new entry to the participation queue with false default value
+			this.activeMembers.add(newMember);
 			this.participationQueue.add(false);
 		}
 	}
 	
 	/**
-	 * remove_member removes the specified member from the Team
+	 * remove_member removes the specified member from the activeMembers list
+	 * and the participation Queue
 	 * @param member: instance of type T to be removed from the Team
 	 */
 	public void remove_member(T member) {
 		
 		// Check that the member is in the LinkedList
-		if (this.members.contains(member))
+		if (this.activeMembers.contains(member))
 		{
 			// First remove from the participation queue
-			this.participationQueue.remove(this.members.indexOf(member));
+			this.participationQueue.remove(this.activeMembers.indexOf(member));
 			
 			// Remove the element from the list
-			this.members.remove(member);
+			this.activeMembers.remove(member);
 		}
 	}
 
@@ -153,18 +185,19 @@ public class Team<T extends Individual> {
 	public String toString() {
 		// Initialize the string
 		// TODO implement IndexOutOfBounds error Handling
-		String out = String.format("Team: %s", this.members.get(0).returnClassTeam());
+		String out = String.format("Team: %s \n\n", this.members.get(0).returnClassTeam());
 		
 		// Team counter
 		int counter = 0;
 		
-		// Run a loop through every member in the linked list to conform a string
-		for (T elem : this.members)
+		// Run a loop through every member in the ArrayList of active and enabled members
+		// to conform the list of available members in the team
+		for (T elem : this.getActiveMembers())
 		{
 			// Update the counter
 			counter += 1;
 			// Append element string
-			out += String.format("\n | %d ).  %s | \n", counter, elem.toString());
+			out += String.format("| %d ).  %s |\n", counter, elem);
 		}
 		
 		// Return out string
@@ -172,7 +205,7 @@ public class Team<T extends Individual> {
 	}
 
 	/**
-	 * drafMember draft a member of the team who has not participated
+	 * drafMember drafts an Active member of the team who has not participated
 	 * @return T type member
 	 */
 	public T draftMember() {
@@ -188,7 +221,7 @@ public class Team<T extends Individual> {
 			if (!participationQueue.get(idx)) {
 				// Set proper participation value
 				participationQueue.set(idx, true);
-				out = members.get(idx);
+				out = activeMembers.get(idx);
 				break;
 			}
 		}
@@ -197,15 +230,133 @@ public class Team<T extends Individual> {
 		return out;
 	}
 	
+	/**
+	 * setClockOnTeamMembers sets the clock on every member present in the
+	 * team.
+	 * @param newClock: Clock instance we want to implement in every team 
+	 * member.
+	 */
+	public void setClockOnTeamMembers(Clock newClock) {
+		// Set the clock in all of the members of the team
+		for (T elem : members) {
+			elem.setClock(newClock);
+		}
+	}
+	
+	/**
+	 * draftByInput drafts the owner of the Turn by means of user input
+	 * @param ui: UI class instance
+	 * @return owner of T type
+	 */
+	public T draftByInput(UI ui) {
+		
+		// Initialize the return value 
+		T myCharacter = null;
+		
+
+		// Generate draft string
+		String out = String.format("\n  Pick a Character: \n\n %s \n Choose a Character 1 - %d \n", 
+				this.toString(), this.getActiveMembers().size());
+		
+		// Print to screen
+		ui.printToScreen(out);
+		
+		// Generate pattern and user Indication
+		String pattern = "^[";
+		String userIndication = "Introduce either ";
+		for (int i = 0; i < this.getActiveMembers().size(); i++) {
+			pattern += Integer.toString(i+1);
+			userIndication += Integer.toString(i+1) + ", ";
+			}
+		pattern += "]$";
+		userIndication += "\n";
+		
+		String inputString = ui.inputScreenPattern(pattern, userIndication);
+		int input = Integer.parseInt(inputString);
+		
+		// Set the owner
+		// TODO: implement IndexOutOfBoundsException
+		myCharacter = this.getActiveMembers().get(input-1);
+		
+		// Print the selection
+		out = String.format("\n Selected %s \n", myCharacter.presentationCard());
+		ui.printToScreen(out);
+			
+		// Return myOwner
+		return myCharacter;
+		
+	}
+	
+	/**
+	 * draftRandomly allows to draft an active member from the team in a random fashion
+	 * @param ui: UI class instance
+	 * @return randomly picked member of the team
+	 */
+	public T draftRandomly(UI ui) {
+		// Initialize the output
+		T mySelection = null;
+		
+		// Collect the attractiveness of the Active members, and generate a distribution array
+		float sum = 0;
+		
+		// Generate a random number from 0 to 1 to obtain an owner
+		float randInt = (float)  Math.random();
+		
+		// Get the total attractiveness
+		for (T elem : this.getActiveMembers()) { sum += elem.getAttractiveness();}
+		
+		// Extract the member
+		float binUp = 0;			// Initialize the binUp float
+			
+		for (T elem : this.getActiveMembers()) {
+			binUp += elem.getAttractiveness() / sum;
+			
+			// Check if the random integer is below the binUp coefficient, if so conclude
+			// the loop and set mySelection value
+			if (randInt <= binUp) {
+				mySelection = elem;
+				break;
+			}
+		}
+			
+		// Print the selection
+		String out = String.format("\n Selected %s \n", mySelection.presentationCard());
+		ui.printToScreen(out);
+		
+		// Return the owner
+		return mySelection;
+	}
+	
 	
 	/***************** GETTERS AND SETTERS ******************/
 	
 	public void setMembers(ArrayList<T> members) {
 		this.members = members;
 	}
-	
 	public ArrayList<T> getMembers() {
 		return members;
+	}
+	public ArrayList<T> getActiveMembers() {
+		return activeMembers;
+	}
+	public ArrayList<T> getActiveAndEnabledMembers(){
+		
+		// Generate a new ArrayList over which to iterate the elements
+		ArrayList<T> myNewList = new ArrayList<T>();
+		
+		// Populate the ArrayList
+		for (T elem : activeMembers) {
+			// Select only those activeMembers that are enabled
+			if (elem.getLastEnabled()) {
+				myNewList.add(elem);
+			}
+		}
+		
+		// Return myNewList
+		return myNewList;
+	}
+	public void setActiveMembers(ArrayList<T> activeMembers) {
+		this.activeMembers = activeMembers;
 	}
 	public ArrayList<Boolean> getParticipationQueue() {
 		return participationQueue;

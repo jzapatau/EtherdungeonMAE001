@@ -6,7 +6,64 @@ package MAE1Project;
 
 /************************************************************/
 /**
+ * @author Felix Zapata
+ * Date: 13/04/2019
+ * 
+ * Paladin class constitutes the second of the concrete classes that
+ * derive from Hero. The characteristics of a Paladin are:
+ * 1. Attack: Low
+ * 2. MaxHealthPoints: High
  * 
  */
 public class Paladin extends Hero {
+	
+	// -------------------------- METHODS --------------------------------/
+	
+	/**
+	 * Class constructor 1
+	 */
+	public Paladin(String name) {
+		// Define the inputs for the superclass
+		super("Paladin", name, 25, 100);
+		
+		// Define the action and set it
+		Action myAction = new Attack(this);
+		
+		// Set action
+		this.setMyAction(myAction);
+	}
+
+	@Override
+	public void performAction(Individual victim) {
+		// Perform the action of the Paladin
+		
+		// The Paladin simply decreases the health of its victim by a parameter
+		// given on the performance.
+		
+		// Re-adapt the health of the victim
+		float victimLastHealth = victim.getLastHealth();
+		
+		// Compute new health
+		victimLastHealth -= this.getPerformance();
+		
+		// Set the new health as the victims lastHealth
+		victim.setLastHealth(victimLastHealth);
+		
+	}
+
+	@Override
+	public String returnClassName() {
+		return "PALADIN";
+	}
+
+	@Override
+	public boolean willDodgeAttack() {
+		return false;
+	}
+
+	@Override
+	public void retaliate(Individual offender) {
+		// Since Paladin does not retaliate then this
+		// method does nothing
+	}
 };
