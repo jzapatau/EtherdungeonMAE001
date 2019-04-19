@@ -1,0 +1,258 @@
+package MAE1Project;
+
+//------------------ IMPORT MODULES ---------------------------//
+
+// No modules to import
+
+/************************************************************/
+/**
+* @author Felix Zapata
+* Date: 3/04/2019
+* 
+* CharacterCatalogue is an enum class which serves as a Catalogue
+* to define the types of characters.
+*/
+public enum CharacterCatalogue {
+	HERO("Lionel Messi %1d"),
+	MONSTER("Sergio Ramos %1d");
+	
+	/**
+	 * defaultName indicates the default name each class
+	 * will be given when defining a virtual user
+	 */
+	String defaultName;
+	
+	//------------------------- METHODS ------------------------------
+	
+	/**
+	 * Class constructor
+	 * 
+	 */
+	private CharacterCatalogue(final String defaultName) {
+		
+	}
+	
+	
+	/**
+	 * tostring method returns the String representation of the catalogue
+	 * @return String representation of the catalogue.
+	 */
+ 	public static String tostring() {
+		//Convert the object to string
+		CharacterCatalogue[] values = CharacterCatalogue.values();
+		String out = "";
+		
+		// Loop through the catalog
+		for (int i = 0; i < values.length; i++) {
+			out += String.format("%s: %d \t", values[i].toString(), i);
+		}
+		// Return the output
+		return out;
+	}
+	
+	
+	/**
+	 * generateUser creates the user with the team that has been picked
+	 * @param settingObj: Settings object we want to modify
+	 * @param userName: name of the user we want to generate
+	 */
+	public void generateUser(Settings settingObj, String userName) {
+		// Decide which type of team to instantiate
+	
+		switch (this) {
+		
+		// Case Hero
+		case HERO:
+
+			// Pick members of the team
+			String outHero = "....Assemble your team: \n" + HeroCatalogue.tostring();
+			settingObj.getUi().printToScreen(outHero);
+			
+			// Extract the members of the HeroCatalogue
+			HeroCatalogue[] optionsHero = HeroCatalogue.values();
+			
+			// Generate the new user hero
+			User<Hero> newUserHero = generateUser(settingObj, userName, optionsHero);
+			
+			// Set the team property of User
+			settingObj.setUserHero(newUserHero);
+			
+			//Return
+			return;
+			
+			// Case Monster
+		case MONSTER:
+
+			// Pick members of the team
+			String outMonster = "....Assemble your team: \n" + MonsterCatalogue.tostring();
+			settingObj.getUi().printToScreen(outMonster);
+			
+			// Extract the members of the HeroCatalogue
+			MonsterCatalogue[] optionsMonster = MonsterCatalogue.values();
+			
+			// Generate the new user Monster
+			User<Monster> newUserMonster = generateUser(settingObj, userName, optionsMonster);
+			
+			// Set the team property of User
+			settingObj.setUserMonster(newUserMonster);
+		
+			// Return
+			return;
+		}
+	}
+	
+	/**
+	 * generateVirtualUser creates the virtual user
+	 * @param settingObj: Settings object we want to modify
+	 * @param userName: name of the user we want to generate
+	 */
+	public void generateVirtualUser(Settings settingObj, String userName) {
+		// Decide which type of team to instantiate
+		switch (this) {
+		
+		// Case Hero
+		case HERO:
+			
+			// Extract the members of the HeroCatalogue
+			HeroCatalogue[] optionsHero = HeroCatalogue.values();
+			
+			// Generate the newUserHero
+			User<Hero> newUserHero = generateVirtualUser(settingObj, userName, optionsHero);
+			
+			// Set the team property of User
+			settingObj.setUserHero(newUserHero);
+			
+			// Return
+			return;
+			
+			// Case Monster
+		case MONSTER:
+			
+			// Extract the members of the HeroCatalogue
+			MonsterCatalogue[] optionsMonster = MonsterCatalogue.values();
+			
+			User<Monster> newUserMonster = generateVirtualUser(settingObj, userName, optionsMonster);
+			
+			// Set the team property of User
+			settingObj.setUserMonster(newUserMonster);
+			
+			// Return
+			return;
+		
+		}
+	}
+	
+	/**
+	 * generateUser is a templatized method that allows to generate the proper user instance
+	 * based on the proper CharacterCatalogue value.
+	 * @param settingsObj: Settings object we want to modify
+	 * @param userName: name of the user we want to generate
+	 * @param options: array containing the Catalog objects from which they will be picked
+	 * @return user object of the proper type
+	 */
+	private <T extends Individual, Q extends Catalog> User<T> generateUser(Settings settingObj, String userName, Q[] options) {
+		// Define the UI query
+		String pattern = String.format("^(\\d+,[^,]+,?){%d}$", settingObj.numberOfMembersinTeam);
+		
+		String userIndication = "%d Choices. Input number (%d - %d) followed by ',' "
+				+ "and name. Example: 2,John Doe,3,Don Quixote,4,... ";
+		userIndication = String.format(userIndication,
+									settingObj.numberOfMembersinTeam, 1, options.length);				
+		
+		// Generate instance of team of Heroes
+		Team<T> team = new Team<T>();
+		
+		// Initialize the variables
+		int value = -1;																			    
+		String charName = "";	
+		
+		// TODO: Implement IndexOutOfBounds exception
+		// Create the appropriate user instance
+		User<T> newUser = new User<T>(userName, this, team, false);
+		
+		// Initialize the counter for attempts and the maxAttemps integers
+		int maxAttempts = 10;
+		int counter = 0;
+		
+		while (counter < maxAttempts) {
+			
+			// Update the counter
+			counter += 1;
+			
+			// Execute the query within a try-catch block
+			try {
+				
+				// Collect user input on the matter
+				String inVal = settingObj.getUi().inputScreenPattern(pattern, userIndication);			    // Extract the values inputed in screen
+				String[] selectedValuesString = inVal.split(",", 2*settingObj.numberOfMembersinTeam);		// Split the data
+				
+				// Loop through the inputs and generate the classes
+				for (int i=0; i < selectedValuesString.length-1; i+=2) {				
+					// Parse the data
+					value = Integer.parseInt(selectedValuesString[i]) - 1;
+					charName = selectedValuesString[i+1];
+					
+					// Extract the Hero class and add it to the team
+					T myIndividual = options[value].instantiateIndividual(charName);
+					team.add_member(myIndividual);
+				}	
+				
+				// Get out of the loop
+				break;
+					
+			}
+			catch (IndexOutOfBoundsException e) {
+				
+				// Print the message that the user has to pick a value from the list
+				settingObj.getUi().printErrorMessage(maxAttempts - counter);
+			}
+		}
+		
+		// Throw exception if maxAttempts is reached
+		if (counter == maxAttempts) {
+			throw new IllegalArgumentException(String.format("Improper user input, attempted %2d unsuccesfully.", maxAttempts));
+		}
+		
+		// Return the output
+		return newUser;
+		
+	}
+	
+	/**
+	 * generateVirtualUser is a templatized method that allows to generate the proper virtual user instance
+	 * based on the proper CharacterCatalogue value.
+	 * @param settingsObj: Settings object we want to modify
+	 * @param userName: name of the user we want to generate
+ 	 * @param options: array containing the Catalog objects from which they will be picked
+	 * @return virtual user object of the proper type
+	 */
+	private <T extends Individual, Q extends Catalog> User<T> generateVirtualUser(Settings settingObj, String userName, Q[] options) {
+		
+		// Generate instance of team of Heroes
+		Team<T> team = new Team<T>();
+					
+		// Initialize the variable before entering the loop
+		int randNum = -1;	
+		String charName = "";
+		
+		// Loop through the members of team
+		for (int i=0; i < settingObj.numberOfMembersinTeam; i++) {
+			
+			// Throw the dice to pick the character and name it accordingly
+			randNum = (int) (options.length*Math.random());
+			charName = String.format(" %d", i+1);
+			
+			// Generate the character and add it to the team
+		    T myHero  = options[randNum].instantiateIndividual(charName);
+		    team.add_member(myHero);
+		}
+		
+		// Create the appropriate user instance
+		User<T> newUser = new User<T>(userName, this, team, true);
+		
+		// Return the newUser
+		return newUser;	
+		
+	}
+	
+}

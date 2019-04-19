@@ -26,7 +26,7 @@ public class Slime extends Monster {
 	 */
 	public Slime(String name) {
 		// Define the inputs for the superclass
-		super("Slime", name, 25, 25);
+		super("Slime", name, 10, 40);
 		
 		// Define the action and set it
 		Action myAction = new Attack(this);
@@ -52,16 +52,15 @@ public class Slime extends Monster {
 		// Set the new health as the victims lastHealth
 		victim.setLastHealth(victimLastHealth);
 		
-		// Now disable the object for the next turn
+		// Now disable the object for the next two turns
 		int nextTurnNum = this.getClock().getTurnNum() + 1;
 		
 		// Get the isEnabled ArrayList of the object and update it
 		ArrayList<Boolean> isEnabled = victim.getIsEnabled();
 		
-		// TODO: Implement IndexOutOfBoundsException, CHECK THAT THE ASSIGNMENT
-		// IS CORRECT;
+		// Assign the new isEnabled
 		if (nextTurnNum < isEnabled.size()) {
-			// Set false to the value assigned to the next Turn
+			// Set false to the value assigned to the next Turn of the opponent team
 			isEnabled.set(nextTurnNum, false);
 		}
 		else {

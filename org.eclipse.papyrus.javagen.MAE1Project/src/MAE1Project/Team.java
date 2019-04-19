@@ -184,7 +184,6 @@ public class Team<T extends Individual> {
 	 */
 	public String toString() {
 		// Initialize the string
-		// TODO implement IndexOutOfBounds error Handling
 		String out = String.format("Team: %s \n\n", this.members.get(0).returnClassTeam());
 		
 		// Team counter
@@ -275,7 +274,6 @@ public class Team<T extends Individual> {
 		int input = Integer.parseInt(inputString);
 		
 		// Set the owner
-		// TODO: implement IndexOutOfBoundsException
 		myCharacter = this.getActiveMembers().get(input-1);
 		
 		// Print the selection
@@ -288,7 +286,8 @@ public class Team<T extends Individual> {
 	}
 	
 	/**
-	 * draftRandomly allows to draft an active member from the team in a random fashion
+	 * draftRandomly allows to draft an active member from the team in a random fashion, considering
+	 * the attractiveness of each member of the team to be picked.
 	 * @param ui: UI class instance
 	 * @return randomly picked member of the team
 	 */
@@ -300,7 +299,7 @@ public class Team<T extends Individual> {
 		float sum = 0;
 		
 		// Generate a random number from 0 to 1 to obtain an owner
-		float randInt = (float)  Math.random();
+		float randVal = (float)  Math.random();
 		
 		// Get the total attractiveness
 		for (T elem : this.getActiveMembers()) { sum += elem.getAttractiveness();}
@@ -313,7 +312,7 @@ public class Team<T extends Individual> {
 			
 			// Check if the random integer is below the binUp coefficient, if so conclude
 			// the loop and set mySelection value
-			if (randInt <= binUp) {
+			if (randVal <= binUp) {
 				mySelection = elem;
 				break;
 			}
@@ -327,6 +326,29 @@ public class Team<T extends Individual> {
 		return mySelection;
 	}
 	
+	/**
+	 * draftRandomlyUniformProbability allows to draft an active member from the team in
+	 * a random fashion with a uniform probability distribution.
+	 * @param ui: UI class instance
+	 * @return randomly picked member of the team
+	 */
+	public T draftRandomlyUniformProbability(UI ui) {
+		// Initialize the output
+		T mySelection = null;
+		
+		// Generate a random number from 0 to size-1 of getActiveMembers
+		int randInt = (int) (this.getActiveMembers().size() * Math.random());
+		
+		// Extract the selection
+		mySelection = this.getActiveMembers().get(randInt);
+		
+		// Print the selection
+		String out = String.format("\n Selected %s \n", mySelection.presentationCard());
+		ui.printToScreen(out);
+		
+		// Return the owner
+		return mySelection;
+	}
 	
 	/***************** GETTERS AND SETTERS ******************/
 	

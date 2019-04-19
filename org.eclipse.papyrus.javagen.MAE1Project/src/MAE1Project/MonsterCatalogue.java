@@ -12,14 +12,15 @@ package MAE1Project;
 * MonsterCatalogue is an enum class which serves as a Catalogue
 * to define the monster.
 */
-public enum MonsterCatalogue{
+public enum MonsterCatalogue implements Catalog{
 
 	// Define the Monster classes available
-	// TODO: define complete collection of MonsterCatalogue
-
 	MUMMY,
 	SPIDER,
-	SLIME;
+	SLIME,
+	DONALDTRUMP,
+	GILETJAUNE,
+	JOKER;
 	
 	public static String tostring() {
 		// Convert to string
@@ -38,13 +39,16 @@ public enum MonsterCatalogue{
 	 * @param name: String with the name of the Monster
 	 * @return Monster class instance
 	 */
+	@SuppressWarnings("unchecked")
 	public Monster instantiateIndividual(String name) {
 		// Implement a switch case that returns the individual object
-		// TODO: Implement constructors of each of these classes
 		switch (this) {
 		case MUMMY: return new Mummy(name);
 		case SPIDER: return new Spider(name);
 		case SLIME: return new Slime(name);
+		case DONALDTRUMP: return new DonaldTrump(name);
+		case GILETJAUNE: return new GiletJaune(name);
+		case JOKER: return new Joker(name);
 		default: return new Mummy(name);
 		}
 	}

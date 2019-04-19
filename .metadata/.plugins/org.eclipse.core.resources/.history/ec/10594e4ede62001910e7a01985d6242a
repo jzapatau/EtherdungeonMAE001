@@ -1,0 +1,7 @@
+package MAE1Project;
+
+public interface Catalog {
+	public static String tostring();
+	
+	
+}

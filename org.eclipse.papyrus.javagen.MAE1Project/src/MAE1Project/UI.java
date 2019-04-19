@@ -133,6 +133,26 @@ public enum UI {
 		return match;
 	}
 	
+	
+	/**
+	 * printErrorMessage prints a common message when an exception has been detected
+	 * associated to an improper user input.
+	 * @param nAttempsRemaining: integer indicating the number of attempts remaining the
+	 * user has to input in a correct fashion.
+	 */
+	public void printErrorMessage(int nAttempsRemaining) {
+		// Define the output String
+		String outInCaseOfException = "\n ---> Invalid inputted values!!! Please select an item"
+				+ " from the list and introduce it in the explained fashion \n ---> ATTEMPTS REMAINING %2d \n";
+		
+		// Complete the String
+		outInCaseOfException = String.format(outInCaseOfException, nAttempsRemaining);
+		
+		// Print to screen
+		printToScreen(outInCaseOfException);	
+		
+	}
+	
 	// --------------------------- GETTERS AND SETTERS ------------------------//
 	
 	public Scanner getMyScanner() {

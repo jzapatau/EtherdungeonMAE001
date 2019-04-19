@@ -26,7 +26,7 @@ public class Mummy extends Monster {
 	 */
 	public Mummy(String name) {
 		// Define the inputs for the superclass
-		super("Mummy", name, 75, 50);
+		super("Mummy", name, 40, 70);
 		
 		// Define the action and set it
 		Action myAction = new Attack(this);
@@ -54,19 +54,20 @@ public class Mummy extends Monster {
 		victim.setLastHealth(victimLastHealth);
 		
 		// Now disable the object for the next turn
-		int nextTurnNum = this.getClock().getTurnNum() + 1;
+		int nextTurnNum = this.getClock().getTurnNum() + 2;
 		
 		// Get the isEnabled ArrayList of the object and update it
 		ArrayList<Boolean> isEnabled = this.getIsEnabled();
 		
-		// TODO: Implement IndexOutOfBoundsException, CHECK THAT THE ASSIGNMENT
-		// IS CORRECT;
+		// Assign the new isEnabled
 		if (nextTurnNum < isEnabled.size()) {
 			// Set false to the value assigned to the next Turn
+			isEnabled.set(nextTurnNum - 1, false);
 			isEnabled.set(nextTurnNum, false);
 		}
 		else {
 			// Add a new record for the next turn which says isEnabled is false;
+			isEnabled.add(false);
 			isEnabled.add(false);
 		}
 			

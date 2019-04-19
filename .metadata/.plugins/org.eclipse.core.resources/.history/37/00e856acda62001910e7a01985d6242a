@@ -1,0 +1,17 @@
+package MAE1Project;
+
+//------------------ IMPORT MODULES ---------------------------//
+
+//No modules to import
+
+/************************************************************/
+/**
+* @author Felix Zapata
+* Date: 3/04/2019
+* 
+* CharacterCatalogue is an enum class which serves as a Catalogue
+* to define the types of characters.
+*/
+public interface Catalogue {
+	//
+}

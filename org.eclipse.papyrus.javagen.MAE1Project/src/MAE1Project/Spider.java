@@ -26,7 +26,7 @@ public class Spider extends Monster {
 	 */
 	public Spider(String name) {
 		// Define the inputs for the superclass
-		super("Spider", name, 25, 25);
+		super("Spider", name, 10, 40);
 		
 		// Define the action and set it
 		Action myAction = new Attack(this);

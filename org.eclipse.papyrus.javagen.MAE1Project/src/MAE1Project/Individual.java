@@ -237,7 +237,7 @@ public abstract class Individual{
 		// Name, Type, health
 		
 		// Define the format
-		String format = "%15s of type: %8s from team: %8s, health: %8.1f / %-5.1f HPs, performance: %8.1f, Enabled: %8s";
+		String format = "%15s of type: %11s from team: %8s, health: %8.1f / %-5.1f HPs, performance: %8.1f, Enabled: %8s";
 
 		// Create the output
 		String output = String.format(format, this.getName(), 
@@ -385,8 +385,6 @@ public abstract class Individual{
 			healthVal = maxHealth;
 		}
 		
-		// TODO: implement IndexOutOfBoundsException to account when this
-		// command is not properly implemented
 		// Set the last value available
 		health.set(clock.getTurnNum(), healthVal);
 		
@@ -399,7 +397,6 @@ public abstract class Individual{
 	private void updateHealth() {
 		
 		// Extract the last health value present in the object
-		// TODO: implement IndexOutOfBoundsException accordingly to avoid conflicts
 		float lastHealth = health.get(clock.getTurnNum() - 1);
 		
 		// Initialize newLastHealth 
@@ -433,9 +430,6 @@ public abstract class Individual{
 		
 		// Check the isEnabled property size, if it's lower than the clock updated turn
 		// then update.
-		// TODO: Check the flow of the algorithm at this point. Possible IndexOutOfBoundsException
-		// because of mismatch between the clock and the size of the array. Same phenomenon
-		// expected for health ArrayList.
 		if (isEnabled.size() == clock.getTurnNum()) {
 			isEnabled.add(true);
 		}	

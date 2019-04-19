@@ -25,7 +25,7 @@ public class Cleric extends Hero {
 	 */
 	public Cleric(String name) {
 		// Define the inputs for the superclass
-		super("Cleric", name, 25, 100);
+		super("Cleric", name, 20, 40);
 		
 		// Define the action and set it
 		Action myAction = new Heal(this);
@@ -71,8 +71,8 @@ public class Cleric extends Hero {
 			myMate = ownerUser.getTeam().draftByInput(ui);
 		}
 		else {
-			// Perform a random draft on the mate
-			myMate = ownerUser.getTeam().draftRandomly(ui);
+			// Perform a random draft on the mate with Uniform Probability
+			myMate = ownerUser.getTeam().draftRandomlyUniformProbability(ui);
 		}
 		
 		// Execute the action over the mate

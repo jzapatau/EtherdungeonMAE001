@@ -63,9 +63,19 @@ public class Settings {
 		out += String.format("\n.. Select Player Mode:\n\t %s", PlayerCatalogue.tostring());
 		this.ui.printToScreen(out);
 		
-		// TODO: implement error checking for type coming from 
+		// Define UI query parameters
+		// Generate pattern and user Indication
+		String pattern = "^[";
+		String userIndication = "Introduce either ";
+		for (int i = 0; i < PlayerCatalogue.values().length; i++) {
+			pattern += Integer.toString(i);
+			userIndication += Integer.toString(i) + ", ";
+			}
+		pattern += "]$";
+		userIndication += "\n";
+		
 		// Collect user input on the matter
-		String inVal = ui.inputScreenPattern("^\\d{1}$", "Input a single digit. Example: 1");
+		String inVal = ui.inputScreenPattern(pattern, userIndication);
 		int input = Integer.parseInt(inVal);
 		
 		// Set the playerMode property
@@ -101,7 +111,7 @@ public class Settings {
 	 * @param vals: values of CharacterCatalogue available
 	 * @param userNum: number of the user inputed.
 	 */
-	private void generateUser(ArrayList<CharacterCatalogue> vals, int userNum){
+	private void generateUser(ArrayList<CharacterCatalogue> vals, int userNum) throws IllegalArgumentException {
 		// Ask the User for name and team
 		String teamString = "";
 		for (int i=0; i < vals.size(); i++) {
@@ -113,19 +123,49 @@ public class Settings {
 		userNameRequest += String.format(".. Introduce separated by comas User: %s name and Team: %s \n", userNum, teamString);
 		ui.printToScreen(userNameRequest);
 		
-		// TODO: implement error checking for type coming from and also String size
-		// Collect user input on the matter
-		String inVal = ui.inputScreenPattern("^[^,]+,\\d{1}$", "...Input User Name followed by ',' and Team number. Example: Felix,0");
-		String[] inVals = inVal.split(",", 2);
-		String userName = inVals[0];
-		int teamVal = Integer.parseInt(inVals[1]);
+		// Define UI query parameters
+		String pattern = "^[^,]+,\\d{1}$";
+		String userIndication = "...Input User Name followed by ',' and Team number. Example: Felix,0";
 		
-		// Generate the user 
-		// TODO: Check for index out of bounds exception
-		vals.get(teamVal).generateUser(this, userName);
+		// Initialize the counter for attempts and the maxAttemps integers
+		int maxAttempts = 10;
+		int counter = 0;
 		
-		// Remove the value from vals so that the team is not repeated
-		vals.remove(teamVal);
+		while (counter < maxAttempts) {
+			
+			// Update the counter
+			counter += 1;
+			
+			// Execute the query within a try-catch block
+			try {
+				
+				// Collect user input on the matter
+				String inVal = ui.inputScreenPattern(pattern, userIndication);
+				String[] inVals = inVal.split(",", 2);
+				String userName = inVals[0];
+				int teamVal = Integer.parseInt(inVals[1]);
+				
+				// Generate the user 
+				vals.get(teamVal).generateUser(this, userName);
+				
+				// Remove the value from vals so that the team is not repeated
+				vals.remove(teamVal);
+				
+				// Exit the loop if succeed
+				break;
+					
+			}
+			catch (IndexOutOfBoundsException e) {
+				
+				// Print the message that the user has to pick a value from the list
+				ui.printErrorMessage(maxAttempts - counter);
+			}
+		}
+		
+		// Throw exception if maxAttempts is reached
+		if (counter == maxAttempts) {
+			throw new IllegalArgumentException(String.format("Improper user input, attempted %2d unsuccesfully.", maxAttempts));
+		}
 	}
 	
 	/**
@@ -139,9 +179,6 @@ public class Settings {
 		
 	}
 	
-	public void repopulateUserHero() {
-		// Repopulate
-	}
 	
 	// ----------------------------- GETTERS AND SETTERS ----------------------------
 

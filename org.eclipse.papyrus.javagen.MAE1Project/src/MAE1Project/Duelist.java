@@ -27,7 +27,7 @@ public class Duelist extends Hero {
 	 */
 	public Duelist(String name) {
 		// Define the inputs for the superclass
-		super("Duelist", name, 50, 67);
+		super("Duelist", name, 25, 70);
 		
 		// Define the action and set it
 		Action myAction = new Attack(this);
@@ -52,6 +52,43 @@ public class Duelist extends Hero {
 		// Set the new health as the victims lastHealth
 		victim.setLastHealth(victimLastHealth);
 			
+	}
+	@Override
+	public <T extends Individual, Q extends Individual> void performAction(User<T> ownerUser, User<Q> opponentUser) {
+		//  performAction in class Duelist will perform 2 (two) attacks on its opponent
+		//
+		
+		// Initialize myVictim
+		Q myFirstVictim = null;
+		Q mySecondVictim = null;
+		
+		// Print the message of draft with Action name
+		String out = String.format("Who will be %s first?", this.getMyAction().getName());
+		ui.printToScreen(out);
+		
+		// Draft the victim based on the userInput boolean
+		if (!(ownerUser.isVirtual())) {
+			// If userInput boolean is True then proceed to draft, otherwise
+			myFirstVictim = opponentUser.getTeam().draftByInput(ui);
+			
+			// Print the message of draft with Action name
+			out = String.format("Who will be %s second?", this.getMyAction().getName());
+			ui.printToScreen(out);
+			
+			// Pick the second victim
+			mySecondVictim = opponentUser.getTeam().draftByInput(ui);
+		}
+		else {
+			// Perform a random draft on the victim
+			myFirstVictim = opponentUser.getTeam().draftRandomly(ui);
+			
+			// Perform a random draft on the second victim
+			mySecondVictim = opponentUser.getTeam().draftRandomly(ui);
+		}
+		
+		// Execute the action over the victims
+		this.getMyAction().execute(myFirstVictim);	
+		this.getMyAction().execute(mySecondVictim);
 	}
 
 	@Override

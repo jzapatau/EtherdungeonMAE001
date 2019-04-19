@@ -24,7 +24,7 @@ public class Paladin extends Hero {
 	 */
 	public Paladin(String name) {
 		// Define the inputs for the superclass
-		super("Paladin", name, 25, 100);
+		super("Paladin", name, 10, 100);
 		
 		// Define the action and set it
 		Action myAction = new Attack(this);

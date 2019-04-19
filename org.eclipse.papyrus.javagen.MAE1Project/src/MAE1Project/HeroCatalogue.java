@@ -12,7 +12,7 @@ package MAE1Project;
 * HeroCatalogue is an enum class which serves as a Catalogue
 * to define the heroes.
 */
-public enum HeroCatalogue{
+public enum HeroCatalogue implements Catalog {
 
 	// Define the Hero classes available
 	WARRIOR,
@@ -42,6 +42,7 @@ public enum HeroCatalogue{
 	 * @param name: String with the name of the Hero
 	 * @return Hero class instance
 	 */
+	@SuppressWarnings("unchecked")
 	public Hero instantiateIndividual(String name) {
 		// Implement a switch case that returns the individual object
 		switch (this) {

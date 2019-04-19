@@ -24,7 +24,7 @@ public class Monk extends Hero {
 	 */
 	public Monk(String name) {
 		// Define the inputs for the superclass
-		super("Monk", name, 50, 33);
+		super("Monk", name, 40, 40);
 		
 		// Define the action and set it
 		Action myAction = new Attack(this);

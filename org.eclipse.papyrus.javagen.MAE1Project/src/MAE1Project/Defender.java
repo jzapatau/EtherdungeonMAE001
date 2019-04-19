@@ -28,7 +28,7 @@ public class Defender extends Hero {
 	public Defender(String name) {
 		// Define the inputs for the superclass (Defender has twice the attractiveness of
 		// getting hit by a Monster)
-		super("Defender", name, 50, 67, 2);
+		super("Defender", name, 15, 80, 2);
 		
 		// Define the action and set it
 		Action myAction = new Attack(this);

@@ -24,7 +24,7 @@ public class Beserker extends Hero {
 	 */
 	public Beserker(String name) {
 		// Define the inputs for the superclass
-		super("Beserker", name, 50, 33);
+		super("Beserker", name, 20, 60);
 		
 		// Define the action and set it
 		Action myAction = new Attack(this);
@@ -35,7 +35,25 @@ public class Beserker extends Hero {
 
 	@Override
 	public void performAction(Individual victim) {
-		// TODO Auto-generated method stub
+		// Perform the action of the Beserker
+		
+		// The Beserker performs a regular attack like any other HERO with the
+		// main difference that he gets health points when he gets a kill;
+		
+		// Re-adapt the health of the victim
+		float victimLastHealth = victim.getLastHealth();
+		
+		// Compute new health
+		victimLastHealth -= this.getPerformance();
+		
+		// If victimLastHealth updated value is less than 0
+		// update the health of the Individual
+		float myLastHealth = this.getLastHealth();
+		myLastHealth = victimLastHealth <= 0? myLastHealth + 5: myLastHealth;
+		
+		// Set the new health as of the victim and the Beserker
+		victim.setLastHealth(victimLastHealth);
+		this.setLastHealth(myLastHealth);
 		
 	}
 

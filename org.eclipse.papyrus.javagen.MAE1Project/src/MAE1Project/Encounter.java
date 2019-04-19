@@ -16,8 +16,6 @@ package MAE1Project;
  * Class Encounter is in charge of commanding the dynamics of
  * any confrontation between two teams.
  * 
- * TODO: Templatize Encounter to be able to account with Users that are different from
- * Hero or Monster
  */
 public class Encounter {
 	
@@ -88,7 +86,6 @@ public class Encounter {
 			}
 			else {
 				// draft monster following participation Queue
-				// TODO: implement TypeException Exception handling
 				// Create newTurn and run it
 				Turn<Monster, Hero> newTurn = new Turn<Monster, Hero>(clock.getTurnNum(), userMonster, userHero);
 				newTurn.runTurn();

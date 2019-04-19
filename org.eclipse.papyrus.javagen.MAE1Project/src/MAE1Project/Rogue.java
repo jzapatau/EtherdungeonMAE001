@@ -31,7 +31,7 @@ public class Rogue extends Hero {
 	 */
 	public Rogue(String name) {
 		// Define the inputs for the superclass
-		super("Rogue", name, 50, 67);
+		super("Rogue", name, 10, 40);
 		
 		// Define the action and set it
 		Action myAction = new Attack(this);

@@ -1,0 +1,18 @@
+package MAE1Project;
+
+//------------------ IMPORT MODULES ---------------------------//
+
+//No modules to import
+
+/************************************************************/
+/**
+* @author Felix Zapata
+* Date: 3/04/2019
+* 
+* Catalogue interface constitutes an interface necessary to define
+* the catalogues that are associated to the characters.
+*/
+public interface Catalog {
+	// Define the methods
+	
+}

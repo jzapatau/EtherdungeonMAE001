@@ -1,0 +1,6 @@
+package MAE1Project;
+
+
+public interface Catalog {
+	public <T extends Individual> T instantiateIndividual(String name);
+}

@@ -24,7 +24,7 @@ public class Assasin extends Hero {
 	 */
 	public Assasin(String name) {
 		// Define the inputs for the superclass
-		super("Assasin", name, 25, 100);
+		super("Assasin", name, 40, 60);
 		
 		// Define the action and set it
 		Action myAction = new Attack(this);

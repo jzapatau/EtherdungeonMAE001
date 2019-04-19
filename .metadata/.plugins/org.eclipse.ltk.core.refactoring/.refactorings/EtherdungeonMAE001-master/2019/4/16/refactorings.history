@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 3 elements to &apos;org.eclipse.papyrus.javagen.MAE1Project/src/MAE1Project&apos;&#x0D;&#x0A;- Original project: &apos;EtherdungeonMAE001-master&apos;&#x0D;&#x0A;- Destination element: &apos;org.eclipse.papyrus.javagen.MAE1Project/src/MAE1Project&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     Joker.java&#x0D;&#x0A;     GiletJaune.java&#x0D;&#x0A;     DonaldTrump.java" description="Copy files" destination="=org.eclipse.papyrus.javagen.MAE1Project/src&lt;MAE1Project" element1="org.eclipse.papyrus.javagen.MAE1Project/src/MAE1Project/Joker.java" element2="org.eclipse.papyrus.javagen.MAE1Project/src/MAE1Project/GiletJaune.java" element3="org.eclipse.papyrus.javagen.MAE1Project/src/MAE1Project/DonaldTrump.java" files="3" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1555697775895" units="0" version="1.0"/>
+</session>
