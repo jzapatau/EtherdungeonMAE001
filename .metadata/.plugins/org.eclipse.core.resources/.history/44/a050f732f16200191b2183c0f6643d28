@@ -13,8 +13,8 @@ package MAE1Project;
 * to define the types of characters.
 */
 public enum CharacterCatalogue {
-	HERO(new String[]{"Lionel Messi", "Diego Maradona", "Hugo Porta", "Jorge L. Borges", "Felipe Contempomi"}),
-	MONSTER(new String[]{"Jorge Videla", "Margaret Thatcher", "General Peron", "Che Guevara", "Ronald Reagan"});
+	HERO(["Lionel Messi", "Diego Maradona", "Hugo Porta", "Jorge L. Borges", "Felipe Contempomi"]),
+	MONSTER(["Jorge Videla", "Margaret Thatcher", "General Peron", "Che Guevara", "Ronald Reagan"]);
 	
 	/**
 	 * defaultName indicates the default name each class

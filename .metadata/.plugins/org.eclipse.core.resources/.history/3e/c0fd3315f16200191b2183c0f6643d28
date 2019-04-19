@@ -13,14 +13,14 @@ package MAE1Project;
 * to define the types of characters.
 */
 public enum CharacterCatalogue {
-	HERO(new String[]{"Lionel Messi", "Diego Maradona", "Hugo Porta", "Jorge L. Borges", "Felipe Contempomi"}),
-	MONSTER(new String[]{"Jorge Videla", "Margaret Thatcher", "General Peron", "Che Guevara", "Ronald Reagan"});
+	HERO("Lionel Messi %1d"),
+	MONSTER("Sergio Ramos %1d");
 	
 	/**
 	 * defaultName indicates the default name each class
 	 * will be given when defining a virtual user
 	 */
-	String[] defaultName;
+	String defaultName;
 	
 	//------------------------- METHODS ------------------------------
 	
@@ -28,7 +28,7 @@ public enum CharacterCatalogue {
 	 * Class constructor
 	 * 
 	 */
-	private CharacterCatalogue(final String[] defaultName) {
+	private CharacterCatalogue(final String defaultName) {
 		// Set the object properties
 		this.setDefaultName(defaultName);
 	}
@@ -239,7 +239,7 @@ public enum CharacterCatalogue {
 			
 			// Throw the dice to pick the character and name it accordingly
 			randNum = (int) (options.length*Math.random());
-			charName = this.getDefaultName()[i];
+			charName = String.format(this.getDefaultName(), i+1);
 			
 			// Generate the character and add it to the team
 		    T myHero  = options[randNum].instantiateIndividual(charName);
@@ -257,12 +257,12 @@ public enum CharacterCatalogue {
 	// ---------------------- GETTERS AND SETTERS ------------------------- //
 	
 	
-	public String[] getDefaultName() {
+	public String getDefaultName() {
 		return defaultName;
 	}
 
 
-	public void setDefaultName(String[] defaultName) {
+	public void setDefaultName(String defaultName) {
 		this.defaultName = defaultName;
 	}
 	

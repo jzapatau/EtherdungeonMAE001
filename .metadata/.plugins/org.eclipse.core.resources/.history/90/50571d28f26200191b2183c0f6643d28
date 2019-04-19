@@ -27,7 +27,7 @@ public class Duelist extends Hero {
 	 */
 	public Duelist(String name) {
 		// Define the inputs for the superclass
-		super("Duelist", name, 15, 70);
+		super("Duelist", name, 25, 70);
 		
 		// Define the action and set it
 		Action myAction = new Attack(this);

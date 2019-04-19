@@ -237,7 +237,7 @@ public abstract class Individual{
 		// Name, Type, health
 		
 		// Define the format
-		String format = "%25s of type: %11s from team: %8s, health: %8.1f / %-5.1f HPs, performance: %8.1f, Enabled: %8s";
+		String format = "%15s of type: %11s from team: %8s, health: %8.1f / %-5.1f HPs, performance: %8.1f, Enabled: %8s";
 
 		// Create the output
 		String output = String.format(format, this.getName(), 
