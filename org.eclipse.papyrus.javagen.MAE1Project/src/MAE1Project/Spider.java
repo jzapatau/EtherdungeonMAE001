@@ -8,10 +8,11 @@ import java.util.ArrayList;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 14/04/2019
- * 
- * Spider class constitutes the first of the concrete classes that
+ */
+ 
+/* Spider class constitutes the first of the concrete classes that
  * derive from Monster. The characteristics of a Spider are:
  * 1. Attack: Low (can poison its target (same effect as for the Rogue))
  * 2. MaxHealthPoints: Low
@@ -49,16 +50,6 @@ public class Spider extends Monster {
 		victimHealth.add((float) -3);
 		victimHealth.add((float) -3);
 		victimHealth.add((float) -3);	
-	}
-
-	@Override
-	public boolean willDodgeAttack() {
-		return false;
-	}
-
-	@Override
-	public String returnClassName() {
-		return "SPIDER";
 	}
 
 	@Override

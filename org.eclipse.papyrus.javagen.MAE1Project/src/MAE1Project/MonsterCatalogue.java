@@ -6,10 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
-* @author Felix Zapata
+* @author Felix Zapata.
 * Date: 3/04/2019
-* 
-* MonsterCatalogue is an enum class which serves as a Catalogue
+*/
+
+/* MonsterCatalogue is an enum class which serves as a Catalogue
 * to define the monster.
 */
 public enum MonsterCatalogue implements Catalog{

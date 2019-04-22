@@ -5,10 +5,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 13/04/2019
- * 
- * Monk class constitutes the 6th of the concrete classes that
+ */
+
+/* Monk class constitutes the 6th of the concrete classes that
  * derived from Hero. The characteristics of a Monk are:
  * 1. Attack: High attack
  * 2. MaxHealthPoints: Low (however it can dodge attacks...when targeted it has
@@ -48,11 +49,6 @@ public class Monk extends Hero {
 		
 		// Set the new health as the victims lastHealth
 		victim.setLastHealth(victimLastHealth);
-	}
-
-	@Override
-	public String returnClassName() {
-		return "MONK";
 	}
 
 	@Override

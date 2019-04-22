@@ -6,10 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 13/04/2019
- * 
- * Duelist class constitutes the 8th of the concrete classes that
+ */
+ 
+/* Duelist class constitutes the 8th of the concrete classes that
  * derive from Hero. The characteristics of Duelist are:
  * 1. Attack: Above average - attacks twice
  * (Instead of attacking once and ending its turn,
@@ -95,16 +96,5 @@ public class Duelist extends Hero {
 	public void retaliate(Individual offender) {
 		// Do nothing
 	}
-
-	@Override
-	public boolean willDodgeAttack() {
-		return false;
-	}
-
-	@Override
-	public String returnClassName() {
-		return "DUELIST";
-	}
-
 
 }

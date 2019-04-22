@@ -10,10 +10,11 @@ import java.util.Scanner;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 3/04/2019
- * 
- * UI class is implemented as an enum with the purpose of
+ */
+ 
+/* UI class is implemented as an enum with the purpose of
  * defining a Singleton class. Using enums to define singletons
  * is described as the best way in Java for implementing this
  * design pattern.
@@ -102,8 +103,7 @@ public enum UI {
 			if (!myString.matches(pattern)) {
 				
 				counter += 1;								// Increment the counter accordingly
-				printToScreen(String.format("\t------ IMPROPER USER INPUT: N attempts remaining: %2d ------\t\n", 
-						maxCount - counter));				// Print the warning to screen
+				printErrorMessage(maxCount - counter);   	// Print the warning to screen
 				
 			}
 			else {
@@ -142,8 +142,8 @@ public enum UI {
 	 */
 	public void printErrorMessage(int nAttempsRemaining) {
 		// Define the output String
-		String outInCaseOfException = "\n ---> Invalid inputted values!!! Please select an item"
-				+ " from the list and introduce it in the explained fashion \n ---> ATTEMPTS REMAINING %2d \n";
+		String outInCaseOfException = "\n ---> Invalid inputted values!!! Please input a proper item"
+				+ " or introduce your choices in the explained fashion \n ---> ATTEMPTS REMAINING %2d \n";
 		
 		// Complete the String
 		outInCaseOfException = String.format(outInCaseOfException, nAttempsRemaining);

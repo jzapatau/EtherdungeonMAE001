@@ -10,10 +10,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 3/04/2019
- * 
- * Class Encounter is in charge of commanding the dynamics of
+ */
+ 
+/* Class Encounter is in charge of commanding the dynamics of
  * any confrontation between two teams.
  * 
  */

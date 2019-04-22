@@ -6,10 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 13/04/2019
- * 
- * Monster abstract class inherits from the Individual abstract
+ */
+ 
+/* Monster abstract class inherits from the Individual abstract
  * class. 
  */
 public abstract class Monster extends Individual {

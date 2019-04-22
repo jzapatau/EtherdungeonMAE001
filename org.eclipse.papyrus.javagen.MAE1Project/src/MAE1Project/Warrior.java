@@ -6,10 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 13/04/2019
- * 
- * Warrior class constitutes the first of the concrete classes that
+ */
+ 
+/* Warrior class constitutes the first of the concrete classes that
  * derive from Hero. The characteristics of a Warrior are:
  * 1. Attack: Medium
  * 2. MaxHealthPoints: above average Health points.
@@ -50,16 +51,6 @@ public class Warrior extends Hero {
 		// Set the new health as the victims lastHealth
 		victim.setLastHealth(victimLastHealth);
 		
-	}
-
-	@Override
-	public String returnClassName() {
-		return "WARRIOR";
-	}
-
-	@Override
-	public boolean willDodgeAttack() {
-		return false;
 	}
 
 	@Override

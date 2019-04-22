@@ -10,10 +10,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 3/04/2019
- * 
- * Class Turn is in charge of commanding the dynamics of
+ */
+ 
+/* Class Turn is in charge of commanding the dynamics of
  * a Turn assigned to any of the two teams. It is a Java Generics
  * class which has as type variable any descendant of Individual
  */

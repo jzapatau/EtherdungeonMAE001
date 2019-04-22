@@ -2,10 +2,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 3/04/2019
- * 
- * Class clock helps keep track of an encounter by counting the number of turns
+ */
+
+/* Class clock helps keep track of an encounter by counting the number of turns
  */
 public class Clock {
 	

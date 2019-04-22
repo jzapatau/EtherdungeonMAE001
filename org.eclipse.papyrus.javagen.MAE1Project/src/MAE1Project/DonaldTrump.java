@@ -6,10 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Xavi Tio.
  * Date: 13/04/2019
- * 
- * DonaldTrump class constitutes the 5th of the concrete classes that
+ */
+
+/* DonaldTrump class constitutes the 5th of the concrete classes that
  * derive from Monster. The characteristics of a DonaldTrump are:
  * 1. Attack: High
  * 2. MaxHealthPoints: High
@@ -49,16 +50,6 @@ public class DonaldTrump extends Monster {
 		// Set the new health as the victims lastHealth
 		victim.setLastHealth(victimLastHealth);
 		
-	}
-
-	@Override
-	public String returnClassName() {
-		return "DONALDTRUMP";
-	}
-
-	@Override
-	public boolean willDodgeAttack() {
-		return false;
 	}
 
 	@Override

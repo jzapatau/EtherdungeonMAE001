@@ -17,10 +17,11 @@ import java.util.ArrayList;			// Import Java ArrayList
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 3/04/2019
- * 
- * Team is a Java Generics class which can only accept as type
+ */
+ 
+/* Team is a Java Generics class which can only accept as type
  * variable any child from Individual. Thus, it constitutes a 
  * Java Generics with bounded type variable. The idea behind this
  * class is to reduce the amount of code required.

@@ -6,10 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Xavi Tio.
  * Date: 14/04/2019
- * 
- * GiletJaune class constitutes the 4th of the concrete classes that
+ */
+ 
+/* GiletJaune class constitutes the 4th of the concrete classes that
  * derive from Monster. The characteristics of GiletJaune are:
  * 1. Attack: Average - , retaliate when hit. 
  *  When GiletJaunes are hit, they hit back the offender that attacked them.)
@@ -58,16 +59,6 @@ public class GiletJaune extends Monster {
 		// of the GiletJaune to the offender.
 		this.getMyAction().execute(offender);
 		
-	}
-
-	@Override
-	public boolean willDodgeAttack() {
-		return false;
-	}
-
-	@Override
-	public String returnClassName() {
-		return "GILETJAUNE";
 	}
 
 

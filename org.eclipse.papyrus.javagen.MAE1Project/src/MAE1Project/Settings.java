@@ -7,10 +7,11 @@ import java.util.Arrays;
 
 /************************************************************/
 /**
-* @author Felix Zapata
+* @author Felix Zapata.
 * Date: 3/04/2019
-* 
-* Settings class is an auxiliary class during the program startup. It
+*/
+
+/* Settings class is an auxiliary class during the program startup. It
 * condenses the functionality required to start the program by defining the
 * settings.
 */
@@ -21,7 +22,7 @@ public class Settings {
 	/**
 	 * numberOfMembersinTeam defines the amount of members in a team
 	 */
-	public final int numberOfMembersinTeam = 5;
+	public final int numberOfMembersinTeam = 4;
 	/**
 	 * ui property helps the object interact with the user
 	 */

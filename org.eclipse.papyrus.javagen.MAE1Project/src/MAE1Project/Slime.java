@@ -8,10 +8,11 @@ import java.util.ArrayList;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 14/04/2019
- * 
- * Slime class constitutes the third of the concrete classes that
+ */
+ 
+/* Slime class constitutes the third of the concrete classes that
  * derive from Monster. The characteristics of a Spider are:
  * 1. Attack: Low (the character hit by the attack loses the next turn)
  * 2. MaxHealthPoints: Low
@@ -68,16 +69,6 @@ public class Slime extends Monster {
 			isEnabled.add(false);
 		}
 				
-	}
-
-	@Override
-	public boolean willDodgeAttack() {
-		return false;
-	}
-
-	@Override
-	public String returnClassName() {
-		return "SLIME";
 	}
 
 	@Override

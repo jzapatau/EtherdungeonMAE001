@@ -10,8 +10,9 @@ import java.util.ArrayList;
 /**
  * @author Felix Zapata
  * Date: 14/04/2019
- * 
- * Mummy class constitutes the second of the concrete classes that
+ */
+ 
+/* Mummy class constitutes the second of the concrete classes that
  * derive from Monster. The characteristics of a Mummy are:
  * 1. Attack: High (only attacks every two turns)
  * 2. MaxHealthPoints: Medium
@@ -71,16 +72,6 @@ public class Mummy extends Monster {
 			isEnabled.add(false);
 		}
 			
-	}
-
-	@Override
-	public boolean willDodgeAttack() {
-		return false;
-	}
-
-	@Override
-	public String returnClassName() {
-		return "MUMMY";
 	}
 
 	@Override

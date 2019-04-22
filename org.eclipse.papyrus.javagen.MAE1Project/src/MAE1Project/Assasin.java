@@ -6,10 +6,12 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 13/04/2019
- * 
- * Assasin class constitutes the second of the concrete classes that
+ */
+
+
+/* Assasin class constitutes the second of the concrete classes that
  * derive from Hero. The characteristics of a Assasin are:
  * 1. Attack: High
  * 2. MaxHealthPoints: below average HPs
@@ -49,16 +51,6 @@ public class Assasin extends Hero {
 		// Set the new health as the victims lastHealth
 		victim.setLastHealth(victimLastHealth);
 		
-	}
-
-	@Override
-	public String returnClassName() {
-		return "ASSASIN";
-	}
-
-	@Override
-	public boolean willDodgeAttack() {
-		return false;
 	}
 
 	@Override

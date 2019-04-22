@@ -6,9 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 14/04/2019
- * 
+ */
+ 
+/* 
  * Defender class constitutes the 9th of the concrete classes that
  * derive from Hero. The characteristics of Defender are:
  * 1. Attack: Below average - , retaliate when hit,
@@ -63,16 +65,5 @@ public class Defender extends Hero {
 		this.getMyAction().execute(offender);
 		
 	}
-
-	@Override
-	public boolean willDodgeAttack() {
-		return false;
-	}
-
-	@Override
-	public String returnClassName() {
-		return "DEFENDER";
-	}
-
 
 }

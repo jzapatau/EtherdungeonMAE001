@@ -6,10 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Xavi Tio.
  * Date: 13/04/2019
- * 
- * Joker class constitutes the 6th of the concrete classes that
+ */
+
+/* Joker class constitutes the 6th of the concrete classes that
  * derive from Monster. The characteristics of a Joker are:
  * 1. Attack: the Joker turns its victims against themselves. Therefore, when
  * a Joker attacks the value of the attack is computed by adding the 
@@ -51,16 +52,6 @@ public class Joker extends Monster {
 		// Set the new health as the victims lastHealth
 		victim.setLastHealth(victimLastHealth);
 		
-	}
-
-	@Override
-	public String returnClassName() {
-		return "JOKER";
-	}
-
-	@Override
-	public boolean willDodgeAttack() {
-		return false;
 	}
 
 	@Override

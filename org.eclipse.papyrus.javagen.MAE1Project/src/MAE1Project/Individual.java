@@ -19,10 +19,11 @@ import java.lang.Boolean;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 3/04/2019
- * 
- * Class Individual is the parent class of all the characters present in the
+ */
+
+/* Class Individual is the parent class of all the characters present in the
  * game. It is an abstract class and describes the basic behavior of all those
  * who derive from it.
  */
@@ -241,7 +242,7 @@ public abstract class Individual{
 
 		// Create the output
 		String output = String.format(format, this.getName(), 
-									  this.returnClassName(),
+									  this.getType(),
 									  this.returnClassTeam(),
 									  this.getLastHealth(),
 									  this.maxHealth,
@@ -266,7 +267,7 @@ public abstract class Individual{
 		String format = "%s the %s";
 	
 		// Create the output
-		String output = String.format(format, this.getName(), this.returnClassName());
+		String output = String.format(format, this.getName(), this.getType());
 		
 		// Return the output
 		return output;
@@ -335,16 +336,13 @@ public abstract class Individual{
 	/**
 	 * willDodgeAttack determine is the object itself will dodge an incoming attack
 	 * or not
-	 * @return
+	 * @return boolean indicating if the Individual will dodge the attack or not.
 	 */
-	public abstract boolean willDodgeAttack();
+	public boolean willDodgeAttack() {
+		// Return the default value which is false.
+		return false;
+	};
 
-	/**
-	 * returnClassName method is an abstract method that returns a String
-	 * containing the class name
-	 * @return className: String containing the class name
-	 */
-	public abstract String returnClassName();
 	
 	/**
 	 * returnClassTeam is an abstract method that returns a String

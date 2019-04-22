@@ -6,10 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
-* @author Felix Zapata
+* @author Felix Zapata.
 * Date: 3/04/2019
-* 
-* CharacterCatalogue is an enum class which serves as a Catalogue
+*/
+
+/* CharacterCatalogue is an enum class which serves as a Catalogue
 * to define the types of characters.
 */
 public enum CharacterCatalogue {

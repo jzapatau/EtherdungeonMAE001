@@ -6,10 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 13/04/2019
- * 
- * Beserker class constitutes the 5th of the concrete classes that
+ */
+
+/* Beserker class constitutes the 5th of the concrete classes that
  * derive from Hero. The characteristics of a Beserker are:
  * 1. Attack: Medium attack
  * 2. MaxHealthPoints: below-average HPs, however it gets heal on kill.
@@ -55,16 +56,6 @@ public class Beserker extends Hero {
 		victim.setLastHealth(victimLastHealth);
 		this.setLastHealth(myLastHealth);
 		
-	}
-
-	@Override
-	public String returnClassName() {
-		return "BESERKER";
-	}
-
-	@Override
-	public boolean willDodgeAttack() {
-		return false;
 	}
 
 	@Override

@@ -6,10 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 3/04/2019
- * 
- * Action class is an abstract class and defines the basic blueprint
+ */
+ 
+ /* Action class is an abstract class and defines the basic blueprint
  * of any characteristic action to be performed by the characters present
  * in the game.
  * 

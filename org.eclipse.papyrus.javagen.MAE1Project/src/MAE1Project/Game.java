@@ -10,10 +10,11 @@ import java.util.ArrayList;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 3/04/2019
- * 
- * Game class is the commanding class of the entire program. It
+ */
+ 
+/* Game class is the commanding class of the entire program. It
  * controls the flow of the program since its beginning until it's
  * end.
  */
@@ -133,6 +134,8 @@ public class Game {
 		for (int i = 0; i < settings.getPlayerMode().getMaxEncounters(); i++) {
 			Encounter newEncounter = generateNewEncounter();
 			newEncounter.runEncounter();
+			// Append encounter to encounters list
+			encounters.add(newEncounter);
 			
 			// Check for the encounter was won, in such a case account for it 
 			if (newEncounter.isWon())

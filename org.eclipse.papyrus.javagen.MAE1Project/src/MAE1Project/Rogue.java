@@ -12,10 +12,11 @@ import java.util.ArrayList;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 13/04/2019
- * 
- * Rogue class constitutes the 4th of the concrete classes that
+ */
+
+/* Rogue class constitutes the 4th of the concrete classes that
  * derive from Hero. The characteristics of a Rogue are:
  * 1. Attack: Medium attack, poisons the target 
  * (A poisoned target will lose 3 HPs at the beginning of 
@@ -55,16 +56,6 @@ public class Rogue extends Hero {
 		victimHealth.add((float) -3);
 		victimHealth.add((float) -3);
 		victimHealth.add((float) -3);
-	}
-
-	@Override
-	public String returnClassName() {
-		return "ROGUE";
-	}
-
-	@Override
-	public boolean willDodgeAttack() {
-		return false;
 	}
 
 	@Override

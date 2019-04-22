@@ -6,10 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 14/04/2019
- * 
- * Heal class is a concrete class derived from Action which related to the 
+ */
+ 
+/* Heal class is a concrete class derived from Action which related to the 
  * heal performance.
  * 
  */

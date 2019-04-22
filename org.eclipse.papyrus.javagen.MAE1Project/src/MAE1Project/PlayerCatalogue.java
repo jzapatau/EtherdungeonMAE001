@@ -5,10 +5,11 @@ package MAE1Project;
 // NO MODULES TO IMPORT 
 
 /**
-* @author Felix Zapata
+* @author Felix Zapata.
 * Date: 3/04/2019
-* 
-* PlayerCatalogue is an enum class which serves as a Catalogue
+*/
+
+/* PlayerCatalogue is an enum class which serves as a Catalogue
 * to define the player mode.
 */
 public enum PlayerCatalogue {

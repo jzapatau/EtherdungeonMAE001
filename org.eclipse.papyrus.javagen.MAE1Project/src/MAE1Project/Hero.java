@@ -6,10 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 3/04/2019
- * 
- * Hero abstract class inherits from the Individual abstract
+ */
+
+/* Hero abstract class inherits from the Individual abstract
  * class. 
  */
 public abstract class Hero extends Individual {

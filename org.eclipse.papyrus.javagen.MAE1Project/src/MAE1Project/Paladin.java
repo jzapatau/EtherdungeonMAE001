@@ -6,10 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 13/04/2019
- * 
- * Paladin class constitutes the second of the concrete classes that
+ */
+ 
+/* Paladin class constitutes the second of the concrete classes that
  * derive from Hero. The characteristics of a Paladin are:
  * 1. Attack: Low
  * 2. MaxHealthPoints: High
@@ -49,16 +50,6 @@ public class Paladin extends Hero {
 		// Set the new health as the victims lastHealth
 		victim.setLastHealth(victimLastHealth);
 		
-	}
-
-	@Override
-	public String returnClassName() {
-		return "PALADIN";
-	}
-
-	@Override
-	public boolean willDodgeAttack() {
-		return false;
 	}
 
 	@Override

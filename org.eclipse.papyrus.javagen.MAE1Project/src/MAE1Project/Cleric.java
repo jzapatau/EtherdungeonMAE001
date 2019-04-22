@@ -6,10 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
- * @author Felix Zapata
+ * @author Felix Zapata.
  * Date: 13/04/2019
- * 
- * Cleric class constitutes the third of the concrete classes that
+ */
+
+/* Cleric class constitutes the third of the concrete classes that
  * derive from Hero. The characteristics of a Cleric are:
  * 1. Attack: does not attack but instead heals its allies (target an ally
  * and give them back HealthPoints)
@@ -79,16 +80,6 @@ public class Cleric extends Hero {
 		this.getMyAction().execute(myMate);
 		
 		
-	}
-
-	@Override
-	public String returnClassName() {
-		return "CLERIC";
-	}
-
-	@Override
-	public boolean willDodgeAttack() {
-		return false;
 	}
 
 	@Override

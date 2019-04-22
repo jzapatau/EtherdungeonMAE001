@@ -6,10 +6,11 @@ package MAE1Project;
 
 /************************************************************/
 /**
-* @author Felix Zapata
+* @author Felix Zapata.
 * Date: 3/04/2019
-* 
-* User class helps define the users in the game.
+*/
+
+/* User class helps define the users in the game.
 */
 public class User<T extends Individual>{
 	/**
