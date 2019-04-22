@@ -42,6 +42,17 @@ public class Spider extends Monster {
 		// poisoning its target over the span of 3 turns by decreasing
 		// the HPs by 3 on every turn.
 		
+		// First perform the main attack
+		// Re-adapt the health of the victim
+		float victimLastHealth = victim.getLastHealth();
+		
+		// Compute new health
+		victimLastHealth -= this.getPerformance();
+		
+		// Set the new health as the victims lastHealth
+		victim.setLastHealth(victimLastHealth);
+		
+		// Poison then the victim to have a non-immediate effect.
 		// First get the health ArrayList of the victim
 		ArrayList<Float> victimHealth = victim.getHealth();
 		

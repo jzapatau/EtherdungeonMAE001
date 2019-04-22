@@ -47,7 +47,18 @@ public class Rogue extends Hero {
 		// When performing its attack, Rogue poisons its target, thus the attack
 		// spans through 3 turns and the poisoned target will lose 3HPs at the beginning
 		// of its turn.
+
+		// Perform the main attack
+		// Re-adapt the health of the victim
+		float victimLastHealth = victim.getLastHealth();
 		
+		// Compute new health
+		victimLastHealth -= this.getPerformance();
+		
+		// Set the new health as the victims lastHealth
+		victim.setLastHealth(victimLastHealth);
+		
+		// Poison the victim to have a non-immediate effect
 		// First get the health ArrayList of the victim
 		ArrayList<Float> victimHealth = victim.getHealth();
 		
